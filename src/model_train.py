@@ -1,7 +1,7 @@
 import numpy as np
-from keras.preprocessing.image import ImageDataGenerator
+from keras_preprocessing.image import ImageDataGenerator
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Dropout
-from keras.models import models
+from tensorflow.keras.models import Model
 from glob import glob
 import os
 import argparse
@@ -14,7 +14,7 @@ def train_model(config_file):
     config = get_data(config_file)
     train = config['model']['trainable']
     if train == True:
-        img_size = config['model']['img_size']
+        img_size = config['model']['image_size']
         train_set = config['model']['train_path']
         test_set = config['model']['test_path']
         num_cls = config['load_data']['num_classes']
@@ -22,7 +22,7 @@ def train_model(config_file):
         shear_range = config['img_augment']['shear_range']
         zoom_range = config['img_augment']['zoom_range']
         horizontal_flip = config['img_augment']['horizontal_flip']
-        vertifal_flip = config['img_augment']['vertifal_flip']
+        vertifal_flip = config['img_augment']['vertical_flip']
         class_mode = config['img_augment']['class_mode']
         batch = config['img_augment']['batch_size']
         loss = config['model']['loss']
@@ -39,7 +39,7 @@ def train_model(config_file):
         
         op = Flatten()(resnet.output)
         prediction = Dense(num_cls, activation='softmax')(op)
-        mod = models.Model(inputs = resnet.input, outputs = prediction)
+        mod = Model(inputs = resnet.input, outputs = prediction)
         print(mod.summary())
         img_size = tuple(img_size)
         
