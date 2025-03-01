@@ -22,7 +22,7 @@ def train_model(config_file):
         shear_range = config['img_augment']['shear_range']
         zoom_range = config['img_augment']['zoom_range']
         horizontal_flip = config['img_augment']['horizontal_flip']
-        vertifal_flip = config['img_augment']['vertical_flip']
+        vertical_flip = config['img_augment']['vertical_flip']
         class_mode = config['img_augment']['class_mode']
         batch = config['img_augment']['batch_size']
         loss = config['train']['loss']
