@@ -18,8 +18,8 @@ def train_and_test(config_file):
 
     splitr = config['train']['split_ratio']
 
-    for k in range(len(cla)):
-        per = len(os.listdir((os.path.join(root_dir,cla[k]))))
+    for k in range(cla):
+        per = len(os.listdir((os.path.join(root_dir, cla[k]))))
         print(k, "->", per)
         cnt = 0
         split_ratio = round((splitr/100)*per)
