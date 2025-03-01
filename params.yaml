@@ -9,16 +9,17 @@ load_data:
   raw_data: data_source
   preproseesd_data: data/processed
   full_path: deep_learning/data_source
+  class_names:
+    ['glioma_tumor', 'meningioma_tumor', 'no_tumor', 'pituitary_tumor']
+  image_size: [255, 255]
 
 train:
   split_ratio: 0.80
-
-model:
   name: VGG19
-  trainable: False
+  trainable: True
   train_path: data/prossed/train
   test_path: data/prossed/test
-  image_size: [255,255]
+  image_size: [255, 255]
   loss: 'categorical_crossentropy'
   optimizer: 'adam'
   metrics: ['accuracy']

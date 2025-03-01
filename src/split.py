@@ -7,34 +7,57 @@ import pandas as pd
 import numpy as np
 import random
 from get_data import get_data, read_params
-
-
+ 
+ 
 def train_and_test(config_file):
     config = get_data(config_file)
     root_dir = config['raw_data']['data_src']
     dest = config['load_data']['preproseesd_data']
-    p = config['load_data']['full_path']
-    cla = config['load_data']['num_classes']
-
-    splitr = config['train']['split_ratio']
-
-    for k in range(cla):
-        per = len(os.listdir((os.path.join(root_dir, cla[k]))))
-        print(k, "->", per)
-        cnt = 0
-        split_ratio = round((splitr/100)*per)
-        for j in os.listdir((os.path.join(root_dir,cla[k]))):
-            pat = os.path.join(root_dir+'/'+cla[k])
-            print(pat)
-            if (cnt!=split_ratio):
-                shutil.copy(pat, dest+'/'+'train'+'/'+'class_'+str(k))
-                cnt+=1
-            else:
-                shutil.copy(pat, dest+'/'+'test'+'/'+'class_'+str(k))
-        
-        print("Done")
-
-
+   
+    os.makedirs(os.path.join(dest, 'train'), exist_ok=True)
+    os.makedirs(os.path.join(dest, 'test'), exist_ok=True)
+   
+    classes = config['load_data']['class_names']
+   
+    for class_name in classes:
+        os.makedirs(os.path.join(dest, 'train', class_name), exist_ok=True)
+        os.makedirs(os.path.join(dest, 'test', class_name), exist_ok=True)
+   
+    training_dir = os.path.join(root_dir, 'Training')
+    for class_name in classes:
+        src_dir = os.path.join(training_dir, class_name)
+        if not os.path.exists(src_dir):
+            print(f"Warning: Directory {src_dir} does not exist. Skipping...")
+            continue
+           
+        files = os.listdir(src_dir)
+        print(f"{class_name} (Training) -> {len(files)} images")
+       
+        for f in files:
+            src_path = os.path.join(src_dir, f)
+            dst_path = os.path.join(dest, 'train', class_name, f)
+            shutil.copy(src_path, dst_path)
+           
+        print(f"Done copying training data for {class_name}")
+   
+    testing_dir = os.path.join(root_dir, 'Testing')
+    for class_name in classes:
+        src_dir = os.path.join(testing_dir, class_name)
+        if not os.path.exists(src_dir):
+            print(f"Warning: Directory {src_dir} does not exist. Skipping...")
+            continue
+           
+        files = os.listdir(src_dir)
+        print(f"{class_name} (Testing) -> {len(files)} images")
+       
+        for f in files:
+            src_path = os.path.join(src_dir, f)
+            dst_path = os.path.join(dest, 'test', class_name, f)
+            shutil.copy(src_path, dst_path)
+           
+        print(f"Done copying testing data for {class_name}")
+ 
+ 
 if __name__=='__main__':
     args=argparse.ArgumentParser()
     args.add_argument('--config',default='params.yaml')
