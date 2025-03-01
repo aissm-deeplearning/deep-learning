@@ -16,7 +16,7 @@ load_data:
 train:
   split_ratio: 0.80
   name: VGG19
-  trainable: False
+  trainable: True
   train_path: data/prossed/train
   test_path: data/prossed/test
   image_size: [255, 255]
