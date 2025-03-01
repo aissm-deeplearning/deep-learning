@@ -57,11 +57,10 @@ def train_model(config_file):
                                                   target_size = img_size,
                                                   batch_size = batch,
                                                   class_mode = class_mode)
-        test_set = test_gen.flow_from_directory(test_set,
-                                                epochs = epochs,
-                                                validation_data = test_set,
-                                                steps_per_epoch = len(train_set),
-                                                validation_steps = len(test_set))
+        test_set = test_gen.flow_from_directory(test_set, 
+                                                target_size=img_size,
+                                                batch_size = batch,
+                                                class_mode = class_mode)
 
         history = mod.fit(train_set,
                           epochs = epochs,
@@ -81,10 +80,6 @@ def train_model(config_file):
 
     else:
         print("Model is not trainable")
-
-
-
-
 
 
 if __name__=='__main__':
