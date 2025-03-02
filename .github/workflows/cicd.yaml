@@ -25,6 +25,15 @@ jobs:
             flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
             flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
+      - name: Docker Build and Push to Docker Hub
+        run : |
+            docker build -t deep-learning:latest .
+            docker tag deep-learning tanzeemrugrel/deep-learning:latest
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker push tanzeemrugrel/deep-learning:latest
+        env:
+            DOCKER_CLI_ACI: 1
+
       - name: Run Trivy vulnerability scanner in fs mode
         uses: aquasecurity/trivy-action@0.28.0
         with:
