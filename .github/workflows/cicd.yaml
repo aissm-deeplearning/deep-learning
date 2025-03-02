@@ -41,5 +41,10 @@ jobs:
             scan-ref: '.'
             trivy-config: trivy.yaml
 
+      - name: Trivy File Scan
+        run: |
+            trivy fs . > trivy_scan.txt
+            trivy image tanzeemrugrel/deep-learning:latest > trivy_image_scan.txt
+
     
            
