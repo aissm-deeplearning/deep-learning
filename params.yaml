@@ -15,7 +15,7 @@ train:
 
 model:
   name: VGG19
-  trainable: True
+  trainable: False
   train_path: data/processed/train
   test_path: data/processed/test
   image_size: [255,255]
