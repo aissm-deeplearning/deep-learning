@@ -2,11 +2,11 @@ import streamlit as st
 import numpy as np
 from keras_preprocessing.image import ImageDataGenerator
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Dropout
-from tensorflow.keras.models import Model
+from tensorflow.keras.models import Model, load_model
 from glob import glob
 import os
 import argparse
-from src.get_data import get_data, read_params
+
 import matplotlib.pyplot as plt
 from keras.applications.vgg16 import VGG16
 import tensorflow as tf
@@ -16,6 +16,13 @@ import mlflow.keras
 from PIL import Image
 import cv2
 import base64
+import os
+import sys
+
+#sys.path.append(os.path.join(os.path.dirname(__file__), "../../src"))
+#sys.path.append('../src')
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from src.get_data import get_data, read_params
 
 # Page Configuration 
 st.set_page_config(page_title="Brain Tumor Classification", layout="wide")
@@ -27,7 +34,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-model = load_model("models/trained.h5")
+model = load_model("../models/trained.h5")
 
 #Class Labels
 
