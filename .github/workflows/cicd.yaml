@@ -1,0 +1,7 @@
+name : mri
+
+on:
+  push:
+    branches: ["main"]
+
+    
