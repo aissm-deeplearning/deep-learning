@@ -1,28 +1,21 @@
-name : mri
-
+name: MRI
+ 
 on:
   push:
     branches: ["main"]
-
-    jobs:
-        build:
-            runs-on: [ "ubuntu-latest" ]
-            steps:
-                - name: Checkout
-                  uses: actions/checkout@v2
-    
-                - name: Set up Python 3.11
-                  uses: actions/setup-python@v3
-                  with:
-                    python-version: "3.11"
-    
-                - name: Install Dependecies
-                  run: |
-                   python -m pip install --upgrade pip 
-                   pip install flake8 pytest
-                   if [ -f req_prod.txt ]; then pip install -r req_prod.txt; fi
-            
-
-
-                
-
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f req_production.txt ]; then pip install -r req_production.txt; fi
